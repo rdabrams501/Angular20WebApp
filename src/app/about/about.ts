@@ -14,6 +14,7 @@ export class About {
     this.currentNum = 0;
   }
 
+  //Start of local storage sample
   ngOnInit() {
     const localParms: any = localStorage.getItem('srvdata.num');   // get persisted value
     if (localParms != null) {
