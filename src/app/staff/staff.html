@@ -240,7 +240,7 @@
 
             <label for="staffNotes">Staff Notes:</label>
             <input class="form-control" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
-          <button type="submit" class="m-1 btn btn-secondary" [disabled]="!editStaffFormData.valid">Edit Staff</button>
+          <button type="submit" class="m-1 btn btn-secondary" [disabled]="!editStaffFormData.valid">Apply</button>
           @if( postMsg.length > 1 && isError == true)
             {
               <div>
@@ -287,7 +287,7 @@
             <input class="form-control" type="string" id="staffStatus" name="staffStatus" formControlName="staffStatus"/>
             <label for="staffNotes">Staff Notes:</label>
             <input class="form-control" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
-          <button type="submit" class="m-1 btn btn-secondary">Delete Staff</button>
+          <button type="submit" class="m-1 btn btn-secondary">Apply</button>
            @if( postMsg.length > 1 && isError == true)
             {
               <div>

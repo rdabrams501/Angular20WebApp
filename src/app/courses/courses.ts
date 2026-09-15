@@ -101,6 +101,11 @@ export class Courses implements OnInit, OnDestroy {
     this.courseFormData.controls['studentCount'].reset();
   }
 
+  public processGetAllCourses()
+  {
+    this.getCourseAndStaff(0 ,"a", 1);
+  }
+
   public processClick()
   {
       this.getCourse();
