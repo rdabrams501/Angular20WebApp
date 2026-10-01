@@ -1,13 +1,27 @@
-<div class="m-1">
-<nav class="navbar navbar-expand-md bg-light">
-      <span class="navbar-brand mb-0 h1">School Web App</span>
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active"><a class="nav-link" href="#home" routerLink="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#staff" routerLink="/staff">Staff</a></li>
-        <li class="nav-item"><a class="nav-link" href="#courses" routerLink="/courses">Courses</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about" routerLink="/about">About</a></li>
-      </ul>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">School Web App</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="#home" routerLink="/">Home</a>
+        <a class="nav-link" href="#staff" routerLink="/staff">Staff</a>
+        <a class="nav-link" href="#courses" routerLink="/courses">Courses</a>
+        <a class="nav-link" href="#about" routerLink="/about">About</a>
+      </div>
+    </div>
+    @if(this.checkAuth())
+    {
+      <a class="nav-link" (click)="this.logout()">Logout</a>
+    }
+    @else()
+    {
+      <a class="nav-link" href="#login" routerLink="/login">Login</a>
+    }
+  </div>
 </nav>
-</div>
 
 <router-outlet />

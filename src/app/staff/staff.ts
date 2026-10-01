@@ -406,7 +406,7 @@ export class Staff {
     else
     {
       console.log(err);
-      this.postMsg = err.error;
+      this.postMsg = String(err.error);
     }
   }
 

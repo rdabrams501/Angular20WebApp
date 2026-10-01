@@ -154,7 +154,13 @@
             </div>
           }
 
-           @if( postMsg.length > 1 && isError == true)
+            @if( postMsg.includes("EXECUTE") && isError == true)
+            {
+              <div>
+              <p class="text-danger">Permission denied for operation!</p>
+              </div>
+            }
+            @else if( postMsg.length > 1 && isError == true)
             {
               <div>
               <p class="text-danger">{{ postMsg }}</p>
@@ -241,7 +247,13 @@
             <label for="staffNotes">Staff Notes:</label>
             <input class="form-control" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
           <button type="submit" class="m-1 btn btn-secondary" [disabled]="!editStaffFormData.valid">Apply</button>
-          @if( postMsg.length > 1 && isError == true)
+           @if( postMsg.includes("EXECUTE") && isError == true)
+            {
+              <div>
+              <p class="text-danger">Permission denied for operation!</p>
+              </div>
+            }
+          @else if( postMsg.length > 1 && isError == true)
             {
               <div>
               <p class="text-danger">{{ postMsg }}</p>
@@ -288,7 +300,13 @@
             <label for="staffNotes">Staff Notes:</label>
             <input class="form-control" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
           <button type="submit" class="m-1 btn btn-secondary">Apply</button>
-           @if( postMsg.length > 1 && isError == true)
+            @if( postMsg.includes("EXECUTE") && isError == true)
+            {
+              <div>
+              <p class="text-danger">Permission denied for operation!</p>
+              </div>
+            }
+          @else if( postMsg.length > 1 && isError == true)
             {
               <div>
               <p class="text-danger">{{ postMsg }}</p>

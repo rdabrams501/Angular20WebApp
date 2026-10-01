@@ -5,6 +5,10 @@ import { Observable } from 'rxjs';
 import { Form, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
+import { CookieService } from 'ngx-cookie-service';
+import { authService } from './serviceSchool/authService';
+
+
 
 import { Home } from './home/home';
 import { About } from './about/about';
@@ -21,4 +25,16 @@ import { Staff } from './staff/staff';
 
 export class App {
   protected readonly title = signal('webspa7');
+  isLoggedIn: boolean = false;
+
+  constructor(private authService: authService) {}
+
+  checkAuth() {
+    return this.authService.isAuthenticatedUser();
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
 }
