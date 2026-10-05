@@ -1,5 +1,5 @@
 import { Component, signal, Injectable, NgModule  } from '@angular/core';
-import { RouterOutlet, RouterModule } from '@angular/router';
+import { RouterOutlet, RouterModule, Router } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Form, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,7 +27,7 @@ export class App {
   protected readonly title = signal('webspa7');
   isLoggedIn: boolean = false;
 
-  constructor(private authService: authService) {}
+  constructor(private authService: authService, private router: Router) {}
 
   checkAuth() {
     return this.authService.isAuthenticatedUser();
@@ -35,6 +35,7 @@ export class App {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['']);
   }
 
 }

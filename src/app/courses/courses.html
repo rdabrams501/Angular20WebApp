@@ -13,7 +13,7 @@
         <div class="row">
           <div class="form-group">
               <label for="courseId">Course ID:</label>
-              <input class="w-50 form-control" type="number" id="courseId" name="courseId" formControlName="courseId"/>
+              <input class="w-50 form-control border-dark-subtle" type="number" id="courseId" name="courseId" formControlName="courseId"/>
               @if((courseId?.dirty || courseId?.touched) &&  courseId?.errors?.['min'])
               {
                 <div>
@@ -38,7 +38,7 @@
         <div class="row g-3">
           <div class="col-auto">
             <label for="teacherName">Staff Name:</label>
-            <input class="w-75 form-control" type="string" id="teacherName" name="teacherName" formControlName="teacherName"/>
+            <input class="w-75 form-control border-dark-subtle" type="string" id="teacherName" name="teacherName" formControlName="teacherName"/>
             @if((teacherName?.dirty || teacherName?.touched) &&  teacherName?.errors?.['minlength'])
             {
               <div>
@@ -55,7 +55,7 @@
 
         <div class="col-auto">
             <label for="studentCount">Student Count (Equal to or Greater Than):</label>
-            <input class="w-75 form-control" type="number" id="studentCount" name="studentCount" formControlName="studentCount"/>
+            <input class="w-75 form-control border-dark-subtle" type="number" id="studentCount" name="studentCount" formControlName="studentCount"/>
             @if((studentCount?.dirty || studentCount?.touched) &&  studentCount?.errors?.['min'])
               {
                 <div>

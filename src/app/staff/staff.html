@@ -13,7 +13,7 @@
 <form [formGroup]="staffFormData" (ngSubmit)="onSubmit(staffFormData.value)">
         <div class="m-3 form-group">
             <label for="staffName">Staff Name:</label>
-            <input class="w-25 form-control" type="string" id="staffName" name="staffName" formControlName="staffName" required/>
+            <input class="w-25 form-control border-dark-subtle" type="string" id="staffName" name="staffName" formControlName="staffName" required/>
             @if((staffName?.dirty || staffName?.touched) &&  staffName?.errors?.['minlength'])
             {
               <div>
@@ -52,11 +52,10 @@
 
 <!--Table to display data-->
 <div class="m-3">
-  <table class="table table-striped table-hover" id="staffTable">
+  <table class="table table-striped table-hover" id="staffTable" table-layout: auto>
   <thead>
     <tr>
-      <th scope="col">Commands</th>
-      <th scope="col">ID</th>
+      <th scope="col" style="width:15%">Commands</th>
       <th scope="col">Name</th>
       <th scope="col">Title</th>
       <th scope="col">Status</th>
@@ -72,7 +71,6 @@
             <button type="button" class="btn btn-secondary" (click)="deleteModal(staff)">Delete</button>
           }
         </div></td>
-        <td>{{staff.id}}</td>
         <td>{{staff.name}}</td>
         <td>{{staff.title}}</td>
         <td>{{staff.status}}</td>
@@ -96,7 +94,7 @@
        <form [formGroup]="addStaffFormData" (ngSubmit)="onSubmitAdd(addStaffFormData.value)">
         <div class="form-group">
             <label for="staffName">Staff Name:</label>
-            <input class="form-control" type="string" id="staffName" name="staffName" formControlName="staffName" required/>
+            <input class="form-control border-dark-subtle" type="string" id="staffName" name="staffName" formControlName="staffName" required/>
             @if((formData("addStaffFormData", "staffName")?.dirty || formData("addStaffFormData", "staffName")?.touched) &&  formData("addStaffFormData", "staffName")?.errors?.['minlength'])
             {
               <div>
@@ -116,7 +114,7 @@
               </div>
             }
             <label for="staffTitle">Staff Title:</label>
-            <input class="form-control" type="string" id="staffTitle" name="staffTitle" formControlName="staffTitle" required/>
+            <input class="form-control border-dark-subtle" type="string" id="staffTitle" name="staffTitle" formControlName="staffTitle" required/>
             @if((formData("addStaffFormData", "staffTitle")?.dirty || formData("addStaffFormData", "staffTitle")?.touched) &&  formData("addStaffFormData", "staffTitle")?.errors?.['minlength'])
             {
               <div>
@@ -137,13 +135,13 @@
             }
 
             <label for="staffStatus">Staff Status:</label>
-            <select class="form-control form-select" type="select" id="staffStatus" name="staffStatus" formControlName="staffStatus" aria-label="Staff status select" required>
+            <select class="form-control form-select border-dark-subtle" type="select" id="staffStatus" name="staffStatus" formControlName="staffStatus" aria-label="Staff status select" required>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
             </select>
 
             <label for="staffNotes">Staff Notes:</label>
-            <input class="form-control" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
+            <input class="form-control border-dark-subtle" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
           <button type="submit" class="m-1 btn btn-secondary" [disabled]="!addStaffFormData.valid">Add Staff</button>
           @if(isLoading)
           {
@@ -196,9 +194,9 @@
         <form [formGroup]="editStaffFormData" (ngSubmit)="onSubmitUpdate(editStaffFormData.getRawValue())">
         <div class="form-group">
             <label for="staffId">Staff ID:</label>
-            <input class="form-control disabled" type="number" id="staffId" name="staffId" formControlName="staffId" />
+            <input class="form-control disabled border-dark-subtle" type="number" id="staffId" name="staffId" formControlName="staffId" />
             <label for="staffName">Staff Name:</label>
-            <input class="form-control" type="string" id="staffName" name="staffName" formControlName="staffName" required/>
+            <input class="form-control border-dark-subtle" type="string" id="staffName" name="staffName" formControlName="staffName" required/>
             @if((formData("editStaffFormData", "staffName")?.dirty || formData("editStaffFormData", "staffName")?.touched) &&  formData("editStaffFormData", "staffName")?.errors?.['minlength'])
             {
               <div>
@@ -218,7 +216,7 @@
               </div>
             }
             <label for="staffTitle">Staff Title:</label>
-            <input class="form-control" type="string" id="staffTitle" name="staffTitle" formControlName="staffTitle" required/>
+            <input class="form-control border-dark-subtle" type="string" id="staffTitle" name="staffTitle" formControlName="staffTitle" required/>
             @if((formData("editStaffFormData", "staffTitle")?.dirty || formData("editStaffFormData", "staffTitle")?.touched) &&  formData("editStaffFormData", "staffTitle")?.errors?.['minlength'])
             {
               <div>
@@ -239,14 +237,15 @@
             }
 
             <label for="staffStatus">Staff Status:</label>
-            <select class="form-control form-select" type="select" id="staffStatus" name="staffStatus" formControlName="staffStatus" aria-label="Staff status select" required>
+            <select class="form-control form-select border-dark-subtle" type="select" id="staffStatus" name="staffStatus" formControlName="staffStatus" aria-label="Staff status select" required>
               <option value="Active">Active</option>
               <option value="Inactive">Inactive</option>
             </select>
 
             <label for="staffNotes">Staff Notes:</label>
-            <input class="form-control" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
+            <input class="form-control border-dark-subtle" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
           <button type="submit" class="m-1 btn btn-secondary" [disabled]="!editStaffFormData.valid">Apply</button>
+          <button type="button" class="btn btn-secondary" (click)="resetModal()">Clear Changes</button>
            @if( postMsg.includes("EXECUTE") && isError == true)
             {
               <div>
@@ -270,7 +269,6 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="resetModal()">Reset</button>
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
       </div>
     </div>
@@ -290,16 +288,16 @@
         <form [formGroup]="deleteStaffFormData" (ngSubmit)="onSubmitDelete(deleteStaffFormData.getRawValue())">
         <div class="form-group">
             <label for="staffId">Staff ID:</label>
-            <input class="form-control disabled" type="number" id="staffId" name="staffId" formControlName="staffId" />
+            <input class="form-control disabled border-dark-subtle" type="number" id="staffId" name="staffId" formControlName="staffId" />
             <label for="staffName">Staff Name:</label>
-            <input class="form-control" type="string" id="staffName" name="staffName" formControlName="staffName"/>
+            <input class="form-control border-dark-subtle" type="string" id="staffName" name="staffName" formControlName="staffName"/>
             <label for="staffTitle">Staff Title:</label>
-            <input class="form-control" type="string" id="staffTitle" name="staffTitle" formControlName="staffTitle"/>
+            <input class="form-control border-dark-subtle" type="string" id="staffTitle" name="staffTitle" formControlName="staffTitle"/>
             <label for="staffStatus">Staff Status:</label>
-            <input class="form-control" type="string" id="staffStatus" name="staffStatus" formControlName="staffStatus"/>
+            <input class="form-control border-dark-subtle" type="string" id="staffStatus" name="staffStatus" formControlName="staffStatus"/>
             <label for="staffNotes">Staff Notes:</label>
-            <input class="form-control" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
-          <button type="submit" class="m-1 btn btn-secondary">Apply</button>
+            <input class="form-control border-dark-subtle" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
+          <button type="submit" class="m-1 btn btn-secondary">Confirm</button>
             @if( postMsg.includes("EXECUTE") && isError == true)
             {
               <div>

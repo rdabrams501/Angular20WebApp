@@ -15,7 +15,7 @@
     </div>
     @if(this.checkAuth())
     {
-      <a class="nav-link" (click)="this.logout()">Logout</a>
+      <a class="nav-link" role="button" (click)="this.logout()">Logout</a>
     }
     @else()
     {
