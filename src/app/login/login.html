@@ -10,7 +10,7 @@
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" formControlName="password" placeholder="Password">
           </div>
-          <button type="submit" class="btn btn-primary" style="margin-top: 6px;">Login</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!this.loginForm.valid" style="margin-top: 6px;">Login</button>
         </form>
       </div>
       @if(isLoading)

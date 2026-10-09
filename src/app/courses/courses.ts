@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { environment } from '../../environments/environment';
 import { ICourseAndStaffData } from '../serviceSchool/course-and-staff-data';
 import { serviceSchool } from '../serviceSchool/serviceSchool';
@@ -15,7 +15,7 @@ import { ICourseData } from '../serviceSchool/course-data';
 export class Courses implements OnInit, OnDestroy {
   public courseFormData: FormGroup;
   public courses: any = [];
-  private chosenCourseId: number;
+  private chosenCourseName: string;
   private chosenTeacherName: string;
   private chosenStudentCount: number;
   public urlPasser: string;
@@ -24,13 +24,13 @@ export class Courses implements OnInit, OnDestroy {
 
   constructor(private service: serviceSchool) {
     this.courseFormData = new FormGroup({
-      courseId: new FormControl<number>(0, [Validators.min(0), Validators.max(9999), Validators.pattern('[0-9]*')]),
+      courseName: new FormControl<string>('', [Validators.minLength(3), Validators.pattern('[a-zA-Z, ]*')]),
       teacherName: new FormControl<string>('', [Validators.minLength(3), Validators.pattern('[a-zA-Z, ]*')]),
       studentCount: new FormControl<number>(0, [Validators.min(0), Validators.max(99), Validators.pattern('[0-9]*')])
-    });
+    }, { validators: this.isInput });
 
     //Initialization
-    this.chosenCourseId = 0;
+    this.chosenCourseName = "";
     this.chosenTeacherName = "";
     this.chosenStudentCount = 0;
     this.urlPasser = "";
@@ -38,7 +38,7 @@ export class Courses implements OnInit, OnDestroy {
 
   ngOnInit() {
     //Clear out defaults
-    this.courseFormData.controls['courseId'].reset();
+    this.courseFormData.controls['courseName'].reset();
     this.courseFormData.controls['teacherName'].reset();
     this.courseFormData.controls['studentCount'].reset();
   }
@@ -46,18 +46,18 @@ export class Courses implements OnInit, OnDestroy {
   ngOnDestroy(): void {}
 
   //-----Course Form Submit and Operations-----
-  public onSubmit(courseFormData: { courseId: string | number | null; teacherName: string | null; studentCount: string | number | null; })
+  public onSubmit(courseFormData: { courseName: string | number | null; teacherName: string | null; studentCount: string | number | null; })
   {
     //Checks if there was any user input.
-    if((courseFormData.courseId == '' || courseFormData.courseId == null) && (courseFormData.teacherName == '' || courseFormData.teacherName == null) && (courseFormData.studentCount == ''  || courseFormData.studentCount == null))
+    if((courseFormData.courseName == '' || courseFormData.courseName == null) && (courseFormData.teacherName == '' || courseFormData.teacherName == null) && (courseFormData.studentCount == ''  || courseFormData.studentCount == null))
     {
       alert('All fields empty canceling search!');
     }
     else
     {
-      if(courseFormData.courseId == '' || courseFormData.courseId == null)
+      if(courseFormData.courseName == '' || courseFormData.courseName == null)
       {
-        courseFormData.courseId = 0;
+        courseFormData.courseName = 'a';
       }
       if(courseFormData.teacherName == '' || courseFormData.teacherName == null)
       {
@@ -70,9 +70,9 @@ export class Courses implements OnInit, OnDestroy {
 
       if(this.courseFormData.valid)
       {
-        if(typeof courseFormData.courseId === 'number')
+        if(typeof courseFormData.courseName === 'string')
         {
-          this.chosenCourseId = courseFormData.courseId;
+          this.chosenCourseName = courseFormData.courseName;
         }
 
         if(typeof courseFormData.teacherName === 'string')
@@ -85,7 +85,7 @@ export class Courses implements OnInit, OnDestroy {
           this.chosenStudentCount = courseFormData.studentCount;
         }
         this.isLoading = true;
-        this.getCourseAndStaff(this.chosenCourseId, this.chosenTeacherName, this.chosenStudentCount)
+        this.getCourseAndStaff(this.chosenCourseName, this.chosenTeacherName, this.chosenStudentCount)
       }
       else
       {
@@ -96,14 +96,15 @@ export class Courses implements OnInit, OnDestroy {
 
   public processClear()
   {
-    this.courseFormData.controls['courseId'].reset();
+    this.courseFormData.controls['courseName'].reset();
     this.courseFormData.controls['teacherName'].reset();
     this.courseFormData.controls['studentCount'].reset();
   }
 
   public processGetAllCourses()
   {
-    this.getCourseAndStaff(0 ,"a", 1);
+    this.isLoading = true;
+    this.getCourseAndStaff("a" ,"a", 1);
   }
 
   public processClick()
@@ -118,17 +119,17 @@ export class Courses implements OnInit, OnDestroy {
                                      err => { this.processError(err); });
   }
 
-  public getCourseAndStaff(cid: number, sname: string, scount: number)
+  public getCourseAndStaff(cname: string, sname: string, scount: number)
   {
-    this.urlPasser = "Courses/" + cid.toString() + "/" + sname + "/" + scount.toString();
+    this.urlPasser = "Advanced/" + cname.toString() + "/" + sname + "/" + scount.toString();
     this.service.getCoursesAndStaffWX(this.urlPasser).subscribe(data => { this.processData(data); },
                                      err => { this.processError(err); });
   }
 
   //-----Data Validators-----
-  public get courseId()
+  public get courseName()
   {
-    return this.courseFormData.get('courseId');
+    return this.courseFormData.get('courseName');
   }
 
   public get teacherName()
@@ -140,6 +141,20 @@ export class Courses implements OnInit, OnDestroy {
   {
     return this.courseFormData.get('studentCount');
   }
+
+  public isInput: ValidatorFn = (form) => {
+    let hasInput = false;
+    const curStudentCount = form.get("studentCount");
+    const curTeacherName = form.get("teacherName");
+    const curCourseName = form.get("courseName");
+
+    if((curStudentCount?.value) || (curTeacherName?.value && curTeacherName?.value.trim() !== '') || (curCourseName ?.value && curCourseName ?.value.trim() !== ''))
+    {
+      hasInput = true;
+    }
+
+    return hasInput ? null : { noInput: true };
+  };
 
   //-----Data Processing-----
   private processData(data: any) {

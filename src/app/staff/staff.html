@@ -82,7 +82,7 @@
 </div>
 
 <!-- Add Modal -->
-<div class="modal fade visible" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade visible" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backgroundColor: rgba(0,0,0,0.5);">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -182,7 +182,7 @@
 </div>
 
 <!-- Edit Modal -->
-<div class="modal fade visible" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade visible" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backgroundColor: rgba(0,0,0,0.5);">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -193,8 +193,6 @@
 
         <form [formGroup]="editStaffFormData" (ngSubmit)="onSubmitUpdate(editStaffFormData.getRawValue())">
         <div class="form-group">
-            <label for="staffId">Staff ID:</label>
-            <input class="form-control disabled border-dark-subtle" type="number" id="staffId" name="staffId" formControlName="staffId" />
             <label for="staffName">Staff Name:</label>
             <input class="form-control border-dark-subtle" type="string" id="staffName" name="staffName" formControlName="staffName" required/>
             @if((formData("editStaffFormData", "staffName")?.dirty || formData("editStaffFormData", "staffName")?.touched) &&  formData("editStaffFormData", "staffName")?.errors?.['minlength'])
@@ -244,7 +242,7 @@
 
             <label for="staffNotes">Staff Notes:</label>
             <input class="form-control border-dark-subtle" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
-          <button type="submit" class="m-1 btn btn-secondary" [disabled]="!editStaffFormData.valid">Apply</button>
+          <button type="submit" class="m-1 btn btn-secondary" [disabled]="editModalSubmitChecker()">Apply</button>
           <button type="button" class="btn btn-secondary" (click)="resetModal()">Clear Changes</button>
            @if( postMsg.includes("EXECUTE") && isError == true)
             {
@@ -276,7 +274,7 @@
 </div>
 
 <!-- Delete Modal -->
-<div class="modal fade visible" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade visible" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="backgroundColor: rgba(0,0,0,0.5);">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -287,8 +285,6 @@
 
         <form [formGroup]="deleteStaffFormData" (ngSubmit)="onSubmitDelete(deleteStaffFormData.getRawValue())">
         <div class="form-group">
-            <label for="staffId">Staff ID:</label>
-            <input class="form-control disabled border-dark-subtle" type="number" id="staffId" name="staffId" formControlName="staffId" />
             <label for="staffName">Staff Name:</label>
             <input class="form-control border-dark-subtle" type="string" id="staffName" name="staffName" formControlName="staffName"/>
             <label for="staffTitle">Staff Title:</label>
@@ -297,7 +293,7 @@
             <input class="form-control border-dark-subtle" type="string" id="staffStatus" name="staffStatus" formControlName="staffStatus"/>
             <label for="staffNotes">Staff Notes:</label>
             <input class="form-control border-dark-subtle" type="string" id="staffNotes" name="staffNotes" formControlName="staffNotes"/>
-          <button type="submit" class="m-1 btn btn-secondary">Confirm</button>
+          <button type="submit" class="m-1 btn btn-secondary" [disabled]="isDeleteDisabled">Confirm</button>
             @if( postMsg.includes("EXECUTE") && isError == true)
             {
               <div>

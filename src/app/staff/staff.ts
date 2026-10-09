@@ -23,6 +23,8 @@ export class Staff {
   private chosenStaff: string;             // form input
   public isButton: boolean;
   public isButtonAll: boolean;
+  public isDeleteDisabled: boolean;
+  //public isEditDisabled: boolean;
   public isSuccess = false;
   public isError = false;
   public isLoading = false;
@@ -44,6 +46,8 @@ export class Staff {
   constructor(private service: serviceSchool, private render:Renderer2) {      // dependency injection of service object
     this.isButton = false;
     this.isButtonAll = false;
+    this.isDeleteDisabled = false;
+    //this.isEditDisabled = true;
      this.staffFormData = new FormGroup({
       staffName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z, ]*')])
     });
@@ -144,6 +148,8 @@ export class Staff {
     this.deleteStaffData.status = deleteStaffFormData.staffStatus;
     this.deleteStaffData.notes = deleteStaffFormData.staffNotes;
 
+    this.isDeleteDisabled = true;
+
     //refactor functions to be one since all reused anyway
      this.service.deleteStaffWX(this.deleteStaffData).subscribe
     ({
@@ -200,6 +206,12 @@ export class Staff {
     {
       this.getStaffByName(this.chosenStaff);
     }
+
+    //specfic to edit modal
+    if(this.editStaffFormData.pristine === false)
+    {
+      this.editStaffFormData.markAsPristine();
+    }
   }
 
   public editModal(staffInfo: IStaffData)
@@ -226,6 +238,22 @@ export class Staff {
     console.log('Selected Staff id:', staffInfo.id);
   }
 
+  public editModalSubmitChecker():boolean
+  {
+
+    //console.log("editStaffFormData.pristine is: " + this.editStaffFormData.pristine);
+    if(this.editStaffFormData.valid && this.editStaffFormData.pristine)
+    {
+      //console.log("edit staff submit is inactive");
+      return true;
+    }
+    else
+    {
+      //console.log("edit staff submit is active");
+      return false;
+    }
+  }
+
   public resetModal()
   {
     const modelElementEdit = document.getElementById('editModal');
@@ -243,6 +271,7 @@ export class Staff {
 
    public deleteModal(staffInfo: IStaffData)
   {
+    this.isDeleteDisabled = false;
     const modelElement = document.getElementById('deleteModal');
     if(modelElement != null)
     {

@@ -15,7 +15,8 @@
     </div>
     @if(this.checkAuth())
     {
-      <a class="nav-link" role="button" (click)="this.logout()">Logout</a>
+      <span class="m-1" >{{this.getUser()}} |</span>
+      <a class="nav-link" role="button" (click)="this.logoutModal()">Logout</a>
     }
     @else()
     {
@@ -23,5 +24,20 @@
     }
   </div>
 </nav>
+
+<div class="modal fade visible" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true" style="backgroundColor: rgba(0,0,0,0.5);" >
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="logoutModalLabel">Confirm Logout?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="this.closeLogoutModal()"></button>
+      </div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-primary" (click)="this.logout()">Confirm</button>
+        <button type="button" class="btn btn-secondary" (click)="this.closeLogoutModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <router-outlet />

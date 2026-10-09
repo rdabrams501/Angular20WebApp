@@ -13,17 +13,19 @@ export class authService {
     private readonly authSecretKey = 'authToken';
     private baseUrl: string;
     private userData$: Observable<IUserData> = new Observable();
+    public usernameShort: string = "";
 
     constructor(private readonly httpClient: HttpClient, private cookieService: CookieService) {
       this.baseUrl = environment.serviceURL;
-      if(this.cookieService.get("loginCookie") === "LoggedIn=True")
+      //Originally used to login back in the user will revisit later when possible
+      /*if(this.cookieService.get("loginCookie").includes("LoggedIn=True"))
       {
         this.isAuthenticated = true;
       }
       else
       {
         this.isAuthenticated = false;
-      }
+      }*/
     }
 
     /*login(username: string, password: string): boolean {
@@ -67,7 +69,8 @@ export class authService {
 
     updateAuthtication()
     {
-      if(this.cookieService.get("loginCookie") === "LoggedIn=True")
+      //Cookie was here previously
+      if(sessionStorage.getItem("LoginStatus") === "true")
       {
         this.isAuthenticated = true;
       }
@@ -82,8 +85,11 @@ export class authService {
     }
 
     logout(): void {
-      //localStorage.removeItem(this.authSecretKey);
-      this.cookieService.delete("loginCookie")
+
+      //original cookie code
+      //this.cookieService.delete("loginCookie")
+
+      sessionStorage.clear();
       this.isAuthenticated = false;
     }
 
