@@ -26,7 +26,7 @@ export class Courses implements OnInit, OnDestroy {
     this.courseFormData = new FormGroup({
       courseName: new FormControl<string>('', [Validators.minLength(3), Validators.pattern('[a-zA-Z, ]*')]),
       teacherName: new FormControl<string>('', [Validators.minLength(3), Validators.pattern('[a-zA-Z, ]*')]),
-      studentCount: new FormControl<number>(0, [Validators.min(0), Validators.max(99), Validators.pattern('[0-9]*')])
+      studentCount: new FormControl<number>(0, [Validators.min(0), Validators.max(99)])
     }, { validators: this.isInput });
 
     //Initialization
@@ -161,12 +161,12 @@ export class Courses implements OnInit, OnDestroy {
       this.isLoading = false;
       if ( data == null)
       {
-        data = 'Course not found!';
+        data = 'No courses found based on search criteria!';
 
       }
       else if (data == '')
       {
-        alert('Course not found!');
+        alert('No courses found based on search criteria!');
       }
       else {
         this.courses = data;

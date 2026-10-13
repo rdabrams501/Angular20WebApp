@@ -24,7 +24,6 @@ export class Staff {
   public isButton: boolean;
   public isButtonAll: boolean;
   public isDeleteDisabled: boolean;
-  //public isEditDisabled: boolean;
   public isSuccess = false;
   public isError = false;
   public isLoading = false;
@@ -47,7 +46,6 @@ export class Staff {
     this.isButton = false;
     this.isButtonAll = false;
     this.isDeleteDisabled = false;
-    //this.isEditDisabled = true;
      this.staffFormData = new FormGroup({
       staffName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.pattern('[a-zA-Z, ]*')])
     });
@@ -266,6 +264,7 @@ export class Staff {
       staffStatus: this.modelStaffData.status,
       staffNotes: this.modelStaffData.notes
       });
+      this.editStaffFormData.markAsPristine();
     }
   }
 
@@ -303,12 +302,6 @@ export class Staff {
     this.service.getStaffWX('staff').subscribe(data => { this.processData(data); },
                                      err => { this.processError(err); });
   }
-
-  /*public getStaffById(staffId: string)
-  {
-    this.service.getStaffWX('staff/'+ staffId).subscribe(data => { this.processData(data); },
-                                     err => { this.processError(err); });
-  }*/
 
   public getStaffByName(staffName: string)
   {
@@ -385,12 +378,12 @@ export class Staff {
     this.isLoading = false;
     if ( data == null)
     {
-      data = 'Staff not found!';
+      data = 'No staff found based on search criteria!';
 
     }
     else if (data == '')
     {
-      alert('Staff not found!');
+      alert('No staff found based on search criteria!');
     }
     else {
       this.staffs = data;

@@ -28,31 +28,6 @@ export class authService {
       }*/
     }
 
-    /*login(username: string, password: string): boolean {
-      if (username === 'Jaydeep Patil' && password === 'Pass@123') {
-        const authToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpheWRlZXAgUGF0aWwiLCJpYXQiOjE1MTYyMzkwMjJ9.yt3EOXf60R62Mef2oFpbFh2ihkP5qZ4fM8bjVnF8YhA'; // Generate or receive the token from your server
-        localStorage.setItem(this.authSecretKey, authToken);
-        this.isAuthenticated = true;
-        return true;
-      } else {
-        return false;
-      }
-    }*/
-
-    /*handleLogin(user: IUserData): boolean{
-      try{
-        const expireDate = new Date();
-        expireDate.setHours(expireDate.getHours() + 24);
-        this.cookieService.set("loginCookie", "LoggedIn=True", expireDate);
-        this.isAuthenticated = true;
-        return this.isAuthenticated;
-      }
-      catch(error){
-        console.log("Error logging in: " + error);
-        return false;
-      }
-    }*/
-
     public postUserCheckWX(user: IUserData ): Observable<string>{
         const fullUrl = "https://webappapitest3.azurewebsites.net/User";
         const body = JSON.stringify(user);

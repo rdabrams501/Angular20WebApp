@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { authService } from '../serviceSchool/authService';
 import { IUserData } from '../serviceSchool/user-data';
 import { CookieService } from 'ngx-cookie-service';
-import { HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   imports: [FormsModule, ReactiveFormsModule],
@@ -28,9 +27,6 @@ export class Login {
     });
   }
 
-  /*ngOnInit(): void {
-
-  }*/
   onSubmit(): void {
     if (this.loginForm.valid) {
 
@@ -48,14 +44,6 @@ export class Login {
         next: (data) => {this.processUser(data)},
         error: (err) => {this.processError(err)}
       });
-
-       /*// Call the authentication service's login method
-       if (this.authenticationService.handleLogin(this.userData)) {
-        // Navigate to the ProductListComponent upon successful login
-        this.router.navigate(['']);
-      } else {
-        // Handle authentication error (show error message, etc.)
-      }*/
     }
   }
 

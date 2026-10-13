@@ -25,6 +25,7 @@
   </div>
 </nav>
 
+<!--Logout Modal-->
 <div class="modal fade visible" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true" style="backgroundColor: rgba(0,0,0,0.5);" >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -33,8 +34,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="this.closeLogoutModal()"></button>
       </div>
       <div class="modal-body">
-        <button type="button" class="btn btn-primary" (click)="this.logout()">Confirm</button>
-        <button type="button" class="btn btn-secondary" (click)="this.closeLogoutModal()">Close</button>
+        <button type="button" class="btn btn-primary m-1" (click)="this.logout()">Confirm</button>
+        <button type="button" class="btn btn-secondary m-1" (click)="this.closeLogoutModal()">Close</button>
       </div>
     </div>
   </div>
