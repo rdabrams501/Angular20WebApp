@@ -1,0 +1,82 @@
+<!--Page Header-->
+<div class="m-3">
+<div class="container-fluid p-3 rounded-3 bg-secondary-subtle">
+  <h1>Course and Student Stats</h1>
+  <hr class="my-4">
+  <p>This report produces a distribution bar chart of courses and students based on a date range.</p>
+</div>
+</div>
+
+<!--Reports Form-->
+<div class="container m-3" style="width: 400px;">
+<form class="row g-2" [formGroup]="courseAnalyticsFormData" (ngSubmit)="onSubmit(courseAnalyticsFormData.value)">
+  <div class="col-md-6">
+    <label for="startDate">Start Date:</label>
+        <input class=" form-control border-dark-subtle" placeholder="YYYY-MM-DD" type="string" id="startDate" name="startDate" formControlName="startDate" required/>
+        @if((startDate?.dirty || startDate?.touched) &&  startDate?.errors?.['pattern'])
+        {
+          <div>
+          <p class="text-danger">Both fields must be in YYYY-MM-DD format!</p>
+          </div>
+        }
+  </div>
+  <div class="col-md-6">
+    <label for="endDate">End Date:</label>
+        <input class=" form-control border-dark-subtle" placeholder="YYYY-MM-DD" type="string" id="endDate" name="endDate" formControlName="endDate" required/>
+        @if((endDate?.dirty || endDate?.touched) &&  endDate?.errors?.['pattern'])
+        {
+          <div>
+          <p class="text-danger">Both fields must be in YYYY-MM-DD format!</p>
+          </div>
+        }
+  </div>
+  <div class="form-group">
+    <button type="submit" [disabled]="!courseAnalyticsFormData.valid">Search</button>
+    <button type="button" class="m-1"(click)="onSubmitAll()">Get Full Analytics</button>
+    <button type="button" class="m-1"(click)="processClear()">Reset</button>
+    @if(this.analyticsResults.courseNumCategories.length < 1)
+    {
+      <div>
+      <p class="text-danger">No courses found to analyze at that date range!!!</p>
+      </div>
+    }
+  </div>
+</form>
+</div>
+
+<!--Loading Spinner-->
+@if(isLoading)
+{
+  <div class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+}
+
+<div class="row g-2">
+
+  <div class="col-md-6">
+      <!-- Bar Chart-->
+      @if(showChart)
+      {
+        <div class="mx-auto p-2" style="width: 800px; height: 450px;">
+          <canvas baseChart [data]="chartData" [options]="chartOptions" [type]="'bar'"> </canvas>
+        </div>
+      }
+  </div>
+
+  <div class="col-md-6">
+      <!--Numerical report-->
+      @if(this.analyticsResults.minNum > 0)
+      {
+        <p class="m-2">The min number of students in a class is: {{this.analyticsResults.minNum}}</p>
+        <p class="m-2">The max number of students in a class is: {{this.analyticsResults.maxNum}}</p>
+        <p class="m-2">The range of number of students in the classes is: {{this.analyticsResults.rangeNum}}</p>
+        <p class="m-2">The average number of students in the classes are: {{this.analyticsResults.avgNum.toFixed(2)}}</p>
+      }
+  </div>
+</div>
+
+
+

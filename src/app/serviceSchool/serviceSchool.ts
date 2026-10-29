@@ -6,6 +6,7 @@ import { IStaffData } from './staff-data';
 import { ICourseData } from './course-data';
 import { ICourseAndStaffData } from './course-and-staff-data';
 import { IStaffInsert } from './istaff-insert';
+import { IAnalyticsFormData } from './analytics-form-data';
 
 
 @Injectable({providedIn: 'root'})
@@ -74,6 +75,19 @@ export class serviceSchool {
       'Content-Type': 'application/json; charset=utf-8'
     });
     return this.httpClient.put<any>(fullUrl, body,  {
+          headers,
+         'observe': 'body',
+         'responseType': 'json'
+      });
+  }
+
+  public getCourseAnalyticsByDate(dates: IAnalyticsFormData ): Observable<string>{
+    const fullUrl = this.baseUrl + "Analytics";
+    const body = JSON.stringify(dates);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8'
+    });
+    return this.httpClient.post<any>(fullUrl, body,  {
           headers,
          'observe': 'body',
          'responseType': 'json'
