@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { authService } from './serviceSchool/authService';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 
 
@@ -62,6 +63,16 @@ export class App {
       if(modelElement != null)
       {
         modelElement.style.display = "none";
+      }
+    }
+    public getUserType()
+    {
+      if(sessionStorage.getItem("User") === "adminlogin")
+      {
+        return true;
+      }
+      else{
+        return false;
       }
     }
 
